@@ -1,10 +1,15 @@
+// tic tac toe game in rust
+
+// print player function
 fn print_player(player: &char) {
     print!("{}", player);
 }
 
+// draws the board on the screen
 fn draw(board_state: &[char]) {
     println!("\n");
 
+    // for i in the number of rows
     for i in (0..3).rev() {
         let offset = i * 3;
 
@@ -19,16 +24,19 @@ fn draw(board_state: &[char]) {
     println!("-------------")
 }
 
+// get input from user
 fn get_user_input(board_state: &mut [char], player: char) {
     loop {
         println!("Player {}, enter a number: ", player);
 
+        // mutable input, if not input return
         let mut input = String::new();
         if std::io::stdin().read_line(&mut input).is_err() {
             println!("Could not read input, try again.");
             continue;
         }
 
+        // if number is a number
         if let Ok(number) = input.trim().parse::<usize>() {
             if number < 1 || number > 9 {
                 println!("Number out of range.");
@@ -54,6 +62,7 @@ fn get_user_input(board_state: &mut [char], player: char) {
     }
 }
 
+// check the board for a winner
 fn check_winner(board_state: &[char]) -> bool {
     for tmp in 0..3 {
         if board_state[tmp] == board_state[tmp + 3] && board_state[tmp] == board_state[tmp + 6] {
